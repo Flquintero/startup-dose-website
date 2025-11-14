@@ -4,12 +4,12 @@ import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'Startup Dose',
-  description: 'Your source for startup insights and growth strategies',
+  description: 'One startup a day',
   keywords: 'startup, growth, entrepreneurship, business',
   authors: [{ name: 'Startup Dose Team' }],
   openGraph: {
     title: 'Startup Dose',
-    description: 'Your source for startup insights and growth strategies',
+    description: 'One startup a day',
     type: 'website',
   },
 };
