@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'Startup Dose',
@@ -19,8 +20,9 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="dark">
+      <body className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200 transition-colors duration-200">
+        <Header />
         <main role="main">{children}</main>
       </body>
     </html>

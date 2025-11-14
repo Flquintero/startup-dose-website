@@ -1,128 +1,108 @@
-import Header from '@/components/Header';
-import ThemeToggle from '@/components/ThemeToggle';
-import ClientExample from '@/components/ClientExample';
-import { apiFetch } from '@/lib/http';
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
-
-async function getPostFromApi(): Promise<Post | null> {
-  try {
-    // Server-side API call using the proxy rewrite
-    // This calls /api/posts/1 which is rewritten to API_BASE_URL/posts/1
-    const post = await apiFetch<Post>('/api/posts/1', {
-      cache: 'no-store',
-    });
-    return post;
-  } catch (error) {
-    console.error('Failed to fetch post from API:', error);
-    return null;
-  }
-}
-
-export default async function Home(): Promise<JSX.Element> {
-  const post = await getPostFromApi();
-
+export default function Home(): JSX.Element {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
-      <Header />
-
-      <div className="container mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
-            Welcome to Startup Dose
+    <div className="min-h-screen bg-white dark:bg-[#0b0b0d] transition-colors duration-200">
+      <div className="max-w-3xl mx-auto px-4 pt-4 pb-10">
+        {/* Centered Heading */}
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-[#111] dark:text-white mb-2">
+            Featured Startup
           </h1>
-          <ThemeToggle />
+          <div className="w-24 h-1 bg-yellow-400 mx-auto"></div>
         </div>
 
-        <p className="text-lg text-slate-700 dark:text-slate-300 mb-8 max-w-2xl">
-          Get insights, strategies, and resources to scale your startup. Learn from industry
-          leaders and stay ahead of the curve.
+        {/* Startup Name */}
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#111] dark:text-white mb-2">
+          Blaze
+        </h2>
+        <p className="text-center text-neutral-600 dark:text-neutral-400 mb-6">
+          (blaze.money)
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div
-            className="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-sm
-            hover:shadow-md transition-shadow duration-200"
-          >
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
-              Growth Tips
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              Discover proven strategies to accelerate your startup growth and reach product-market
-              fit.
-            </p>
-          </div>
-
-          <div
-            className="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-sm
-            hover:shadow-md transition-shadow duration-200"
-          >
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
-              Industry Insights
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              Stay informed with the latest trends, market analysis, and industry updates.
-            </p>
-          </div>
-
-          <div
-            className="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg shadow-sm
-            hover:shadow-md transition-shadow duration-200"
-          >
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
-              Resources
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              Access curated tools, templates, and resources to support your entrepreneurial
-              journey.
-            </p>
-          </div>
+        {/* Large Featured Image */}
+        <div className="relative w-full aspect-video bg-neutral-200 dark:bg-neutral-800 rounded-lg mb-8 overflow-hidden">
+          <img
+            src="https://uploads.linear.app/2f024a2b-5bcd-4bb8-b029-31c8331af6b6/34447bcf-6631-46d4-90fb-21cbc492c2dd/38d1feec-502f-4b08-8b48-591308a3d7fa"
+            alt="Blaze"
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <div className="mt-16 space-y-8">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              API Integration Examples
-            </h2>
+        {/* Sections with spacing */}
+        <div className="space-y-8">
+          {/* Section: What the company does */}
+          <section className="space-y-3">
+            <div className="mb-3">
+              <h2 className="text-2xl font-bold text-[#111] dark:text-white mb-2">
+                What the company does
+              </h2>
+              <div className="w-16 h-1 bg-yellow-400"></div>
+            </div>
+            <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+              Blaze is basically a <strong>global Venmo for cross-border payments</strong>.
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-neutral-900 dark:text-neutral-200 leading-relaxed">
+              <li>
+                It's a peer-to-peer payments app that uses <strong>USDC (a U.S. dollar stablecoin)</strong> under the hood so people can send money <strong>instantly and with very low fees</strong> between countries.
+              </li>
+              <li>
+                They're focused on <strong>digital nomads, expats, and remote workers</strong> who need to pay rent, tutors, freelancers, or friends in another country without the usual bank friction.
+              </li>
+              <li>
+                The app has a <strong>social payments feed</strong> (like Venmo) plus features like payment links for freelancers and vendors, and support for <strong>34+ countries</strong> across North and Latin America (and expanding).
+              </li>
+            </ul>
+            <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+              In short: send and receive money globally, nearly free, from your phone, in a very consumer-friendly UI.
+            </p>
+          </section>
 
-            {post ? (
-              <div
-                className="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg border
-                border-slate-200 dark:border-slate-700"
-              >
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                  Server-Side API Call (Proxy Rewrite)
+          {/* Section: Why we like it */}
+          <section className="space-y-4">
+            <div className="mb-3">
+              <h2 className="text-2xl font-bold text-[#111] dark:text-white mb-2">
+                Why we like it
+              </h2>
+              <div className="w-16 h-1 bg-yellow-400"></div>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
+                  Clear, painful problem
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
-                  This post was fetched on the server using the proxy rewrite pattern:
-                </p>
-                <div className="bg-white dark:bg-slate-900 p-4 rounded border border-slate-200 dark:border-slate-700">
-                  <p className="text-slate-900 dark:text-white font-mono text-sm mb-2">
-                    <strong>ID:</strong> {post.id}
-                  </p>
-                  <p className="text-slate-900 dark:text-white font-mono text-sm mb-2">
-                    <strong>Title:</strong> {post.title}
-                  </p>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm">
-                    {post.body}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="p-6 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700">
-                <p className="text-amber-800 dark:text-amber-200">
-                  Could not fetch post from server. Make sure the API is running at localhost:4000.
+                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+                  Cross-border payments are still a mess: slow, expensive, and confusing. Blaze is going after a real, daily pain for people who live/work between countries (exactly the kind of focused use case investors like).
                 </p>
               </div>
-            )}
-          </div>
 
-          <ClientExample />
+              <div>
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
+                  Strong, credible wedge
+                </h3>
+                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+                  Their wedge is <strong>USDC + P2P + social</strong>: stablecoin rails for speed and cost, wrapped in a simple "Venmo-style" app. That combo is much easier to explain to normal users than "open a crypto wallet and manage addresses."
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
+                  Founder–problem fit
+                </h3>
+                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+                  The founders are literally international nomads who struggled with this themselves; they've built and scaled startups before (including one to $1M ARR and a #1 App Store hit) and have backgrounds at Spotify, Artsy, Bitpanda, etc. That's a good mix of product, design, and fintech experience.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
+                  YC + solid early traction
+                </h3>
+                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
+                  They're a <strong>YC S24</strong> company, already live in the US and Mexico with thousands of users, and actively hiring—nice signals for momentum without being "too big" yet.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
