@@ -5,7 +5,7 @@ export default function Home(): JSX.Element {
         {/* Centered Heading */}
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-center text-[#111] dark:text-white mb-2">
-            Featured Startup
+            Today&rsquo;s Startup
           </h1>
           <div className="w-24 h-1 bg-yellow-400 mx-auto"></div>
         </div>
