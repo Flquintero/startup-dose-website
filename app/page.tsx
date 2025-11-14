@@ -42,10 +42,10 @@ export default function Home(): JSX.Element {
             </p>
             <ul className="list-disc list-inside space-y-2 text-neutral-900 dark:text-neutral-200 leading-relaxed">
               <li>
-                It's a peer-to-peer payments app that uses <strong>USDC (a U.S. dollar stablecoin)</strong> under the hood so people can send money <strong>instantly and with very low fees</strong> between countries.
+                It&rsquo;s a peer-to-peer payments app that uses <strong>USDC (a U.S. dollar stablecoin)</strong> under the hood so people can send money <strong>instantly and with very low fees</strong> between countries.
               </li>
               <li>
-                They're focused on <strong>digital nomads, expats, and remote workers</strong> who need to pay rent, tutors, freelancers, or friends in another country without the usual bank friction.
+                They&rsquo;re focused on <strong>digital nomads, expats, and remote workers</strong> who need to pay rent, tutors, freelancers, or friends in another country without the usual bank friction.
               </li>
               <li>
                 The app has a <strong>social payments feed</strong> (like Venmo) plus features like payment links for freelancers and vendors, and support for <strong>34+ countries</strong> across North and Latin America (and expanding).
@@ -80,7 +80,7 @@ export default function Home(): JSX.Element {
                   Strong, credible wedge
                 </h3>
                 <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  Their wedge is <strong>USDC + P2P + social</strong>: stablecoin rails for speed and cost, wrapped in a simple "Venmo-style" app. That combo is much easier to explain to normal users than "open a crypto wallet and manage addresses."
+                  Their wedge is <strong>USDC + P2P + social</strong>: stablecoin rails for speed and cost, wrapped in a simple &ldquo;Venmo-style&rdquo; app. That combo is much easier to explain to normal users than &ldquo;open a crypto wallet and manage addresses.&rdquo;
                 </p>
               </div>
 
@@ -89,7 +89,7 @@ export default function Home(): JSX.Element {
                   Founder–problem fit
                 </h3>
                 <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  The founders are literally international nomads who struggled with this themselves; they've built and scaled startups before (including one to $1M ARR and a #1 App Store hit) and have backgrounds at Spotify, Artsy, Bitpanda, etc. That's a good mix of product, design, and fintech experience.
+                  The founders are literally international nomads who struggled with this themselves; they&rsquo;ve built and scaled startups before (including one to $1M ARR and a #1 App Store hit) and have backgrounds at Spotify, Artsy, Bitpanda, etc. That&rsquo;s a good mix of product, design, and fintech experience.
                 </p>
               </div>
 
@@ -98,7 +98,7 @@ export default function Home(): JSX.Element {
                   YC + solid early traction
                 </h3>
                 <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  They're a <strong>YC S24</strong> company, already live in the US and Mexico with thousands of users, and actively hiring—nice signals for momentum without being "too big" yet.
+                  They&rsquo;re a <strong>YC S24</strong> company, already live in the US and Mexico with thousands of users, and actively hiring&mdash;nice signals for momentum without being &ldquo;too big&rdquo; yet.
                 </p>
               </div>
             </div>
