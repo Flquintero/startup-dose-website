@@ -21,7 +21,7 @@ export default function Home(): JSX.Element {
         {/* Large Featured Image */}
         <div className="relative w-full aspect-video bg-neutral-200 dark:bg-neutral-800 rounded-lg mb-8 overflow-hidden">
           <img
-            src="https://uploads.linear.app/2f024a2b-5bcd-4bb8-b029-31c8331af6b6/34447bcf-6631-46d4-90fb-21cbc492c2dd/38d1feec-502f-4b08-8b48-591308a3d7fa"
+            src="https://startup-dose.s3.us-east-2.amazonaws.com/BlazeImg.png"
             alt="Blaze"
             className="w-full h-full object-cover"
           />
