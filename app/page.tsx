@@ -17,13 +17,9 @@ async function getLatestCompany(): Promise<CompanyData | null> {
       return null;
     }
 
-    console.log('🔍 Fetching from:', `${baseUrl}/companies/latest`);
-
     const response = await fetch(`${baseUrl}/companies/latest`, {
       cache: 'no-store', // Always get fresh data
     });
-
-    console.log('📡 Response status:', response.status, response.statusText);
 
     if (!response.ok) {
       console.error(`API request failed: ${response.status} ${response.statusText}`);
@@ -31,8 +27,6 @@ async function getLatestCompany(): Promise<CompanyData | null> {
     }
 
     const data = await response.json();
-    console.log('📦 API Response data:', JSON.stringify(data, null, 2));
-
     return data;
   } catch (error) {
     console.error('Error fetching latest company:', error);
