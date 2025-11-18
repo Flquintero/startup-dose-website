@@ -1,4 +1,69 @@
-export default function Home(): JSX.Element {
+interface CompanyData {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  cover_image?: string;
+  description?: string;
+  appeal?: string;
+  website?: string;
+}
+
+async function getLatestCompany(): Promise<CompanyData | null> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!baseUrl) {
+      console.error('NEXT_PUBLIC_API_BASE_URL is not defined');
+      return null;
+    }
+
+    console.log('🔍 Fetching from:', `${baseUrl}/companies/latest`);
+
+    const response = await fetch(`${baseUrl}/companies/latest`, {
+      cache: 'no-store', // Always get fresh data
+    });
+
+    console.log('📡 Response status:', response.status, response.statusText);
+
+    if (!response.ok) {
+      console.error(`API request failed: ${response.status} ${response.statusText}`);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('📦 API Response data:', JSON.stringify(data, null, 2));
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching latest company:', error);
+    return null;
+  }
+}
+
+export default async function Home(): Promise<JSX.Element> {
+  const company = await getLatestCompany();
+
+  // Error state
+  if (!company) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0b0b0d] transition-colors duration-200">
+        <div className="max-w-3xl mx-auto px-4 pt-4 pb-10">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-center text-[#111] dark:text-white mb-2">
+              Today&rsquo;s Startup
+            </h1>
+            <div className="w-24 h-1 bg-yellow-400 mx-auto"></div>
+          </div>
+          <div className="text-center py-12">
+            <p className="text-xl text-neutral-600 dark:text-neutral-400">
+              Unable to load today&rsquo;s startup. Please try again later.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b0b0d] transition-colors duration-200">
       <div className="max-w-3xl mx-auto px-4 pt-4 pb-10">
@@ -11,21 +76,38 @@ export default function Home(): JSX.Element {
         </div>
 
         {/* Startup Name */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#111] dark:text-white mb-2">
-          Blaze
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#111] dark:text-white mb-6">
+          {company.name}
         </h2>
-        <p className="text-center text-neutral-600 dark:text-neutral-400 mb-6">
-          (blaze.money)
-        </p>
 
         {/* Large Featured Image */}
         <div className="relative w-full aspect-video bg-neutral-200 dark:bg-neutral-800 rounded-lg mb-8 overflow-hidden">
           <img
-            src="https://startup-dose.s3.us-east-2.amazonaws.com/BlazeImg.png"
-            alt="Blaze"
+            src={company.cover_image || "https://startup-dose.s3.us-east-2.amazonaws.com/BlazeImg.png"}
+            alt={company.name}
             className="w-full h-full object-cover"
           />
         </div>
+
+        {/* Website Section */}
+        {company.website && (
+          <div className="mb-8">
+            <div className="mb-3">
+              <h2 className="text-2xl font-bold text-[#111] dark:text-white mb-2">
+                Website
+              </h2>
+              <div className="w-16 h-1 bg-yellow-400"></div>
+            </div>
+            <a
+              href={`https://${company.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-900 dark:text-neutral-200 hover:text-yellow-400 dark:hover:text-yellow-400 transition-colors underline"
+            >
+              {company.website}
+            </a>
+          </div>
+        )}
 
         {/* Sections with spacing */}
         <div className="space-y-8">
@@ -37,23 +119,12 @@ export default function Home(): JSX.Element {
               </h2>
               <div className="w-16 h-1 bg-yellow-400"></div>
             </div>
-            <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-              Blaze is basically a <strong>global Venmo for cross-border payments</strong>.
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-neutral-900 dark:text-neutral-200 leading-relaxed">
-              <li>
-                It&rsquo;s a peer-to-peer payments app that uses <strong>USDC (a U.S. dollar stablecoin)</strong> under the hood so people can send money <strong>instantly and with very low fees</strong> between countries.
-              </li>
-              <li>
-                They&rsquo;re focused on <strong>digital nomads, expats, and remote workers</strong> who need to pay rent, tutors, freelancers, or friends in another country without the usual bank friction.
-              </li>
-              <li>
-                The app has a <strong>social payments feed</strong> (like Venmo) plus features like payment links for freelancers and vendors, and support for <strong>34+ countries</strong> across North and Latin America (and expanding).
-              </li>
-            </ul>
-            <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-              In short: send and receive money globally, nearly free, from your phone, in a very consumer-friendly UI.
-            </p>
+            {company.description && (
+              <div
+                className="text-neutral-900 dark:text-neutral-200 leading-relaxed prose prose-neutral dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: String(company.description) }}
+              />
+            )}
           </section>
 
           {/* Section: Why we like it */}
@@ -64,44 +135,12 @@ export default function Home(): JSX.Element {
               </h2>
               <div className="w-16 h-1 bg-yellow-400"></div>
             </div>
-
-            <div className="space-y-3">
-              <div>
-                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
-                  Clear, painful problem
-                </h3>
-                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  Cross-border payments are still a mess: slow, expensive, and confusing. Blaze is going after a real, daily pain for people who live/work between countries (exactly the kind of focused use case investors like).
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
-                  Strong, credible wedge
-                </h3>
-                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  Their wedge is <strong>USDC + P2P + social</strong>: stablecoin rails for speed and cost, wrapped in a simple &ldquo;Venmo-style&rdquo; app. That combo is much easier to explain to normal users than &ldquo;open a crypto wallet and manage addresses.&rdquo;
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
-                  Founder–problem fit
-                </h3>
-                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  The founders are literally international nomads who struggled with this themselves; they&rsquo;ve built and scaled startups before (including one to $1M ARR and a #1 App Store hit) and have backgrounds at Spotify, Artsy, Bitpanda, etc. That&rsquo;s a good mix of product, design, and fintech experience.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-neutral-900 dark:text-neutral-200 mb-1">
-                  YC + solid early traction
-                </h3>
-                <p className="text-neutral-900 dark:text-neutral-200 leading-relaxed">
-                  They&rsquo;re a <strong>YC S24</strong> company, already live in the US and Mexico with thousands of users, and actively hiring&mdash;nice signals for momentum without being &ldquo;too big&rdquo; yet.
-                </p>
-              </div>
-            </div>
+            {company.appeal && (
+              <div
+                className="text-neutral-900 dark:text-neutral-200 leading-relaxed prose prose-neutral dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: String(company.appeal) }}
+              />
+            )}
           </section>
         </div>
       </div>
