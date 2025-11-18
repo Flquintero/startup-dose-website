@@ -130,8 +130,8 @@ export default async function Home(): Promise<JSX.Element> {
               <div className="w-16 h-1 bg-yellow-400"></div>
             </div>
             {company.appeal && (
-              <div
-                className="text-neutral-900 dark:text-neutral-200 leading-relaxed prose prose-neutral dark:prose-invert max-w-none"
+              <ul
+                className="list-disc pl-5 space-y-2 text-neutral-900 dark:text-neutral-200 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: String(company.appeal) }}
               />
             )}
